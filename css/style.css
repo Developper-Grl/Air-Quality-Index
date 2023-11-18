@@ -1,0 +1,94 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    color: #111;
+    position: relative;
+    background-image: linear-gradient(45deg, #4ba0d9, #6dd5fa, #fff);
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.background-layer {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.container {
+    padding: 50px 10px 0;
+}
+
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 72px;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #f1f1f1;
+    text-shadow: 
+    1px 1px 0 #333,
+    2px 2px 0 #3a3a3a,
+    3px 3px 0 #575757,
+    4px 4px 0 #6b6b6b;
+}
+
+.information-block {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 25px 25px 50px;
+    position: relative;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.loader {
+    display: none;
+}
+
+.emoji-logo {
+    display: block;
+    max-width: 75px;
+    margin: 0 auto 10px;
+    filter: drop-shadow(2px 2px 1px #515151);
+}
+
+.table {
+    display: grid;
+    grid-template-columns: repeat(2, 4fr);
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: left;
+    
+}
+
+.cell {
+    border: 1px solid #34343488;
+    padding: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #343434;
+  
+}
+
+.user-information {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
