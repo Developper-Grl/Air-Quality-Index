@@ -39,34 +39,61 @@ const pollutionScale = [
 
   const loader = document.querySelector(".loader");
   const emojiLogo = document.querySelector(".emoji-logo");
-  const userInformation = document.querySelector(".user-informaton");
+  const userInformation = document.querySelector(".user-information");
 
   async function getPollutionData() {
     try {
-        const response = await fetch("http://api.airvisual.com/v2/nearest_city?key=8efa5bd4-66d9-49a5-af97-3ddc5dc77e58")
-
-        const responseData = await response.json();
-        const aqi = responseData.data.current.pollution.aqius;
-
-        const sortedData = {
+        const response = await fetch("http://api.airvisual.com/v2/nearest_city?key=8efa5bd4-66d9-49a5-af97-3ddc5dc77e58").
+        catch(error => {
+          throw new Error(error); 
+        })
+        if(!response.ok){
+          throw new Error(`Error ${response.status}, ${response.statusText}`) 
+        }
+        else {
+          const responseData = await response.json();
+          const aqi = responseData.data.current.pollution.aqius;
+          console.log(responseData);
+          const sortedData = {
           city: responseData.data.city,
-          aqi: aqi,
+          aqi,
           ...pollutionScale.find(obj => aqi >= obj.scale[0] && aqi <= obj.scale[1])
         }
 
         populateUI(sortedData);
+        } 
     }
-    catch(error) {
-
+    catch(error){
+      throw new Error(error); 
     }
   }
 
   getPollutionData();
+
   const backgroundLayer = document.querySelector(".background-layer");
-  const cityName = document.querySelector(".city-Name");
+  const cityName = document.querySelector(".city-name");
   const pollutionInfo = document.querySelector(".pollution-info");
   const pollutionValue = document.querySelector(".pollution-value");
 
   function populateUI(data) {
     emojiLogo.src = `img/${data.src}.svg`;
+    userInformation.textContent = `Here is the ${data.city} situation`;
+    cityName.textContent = `${data.city}`;
+    pollutionInfo.textContent = data.quality;
+    pollutionValue.textContent = data.aqi;
+    backgroundLayer.style.backgroundImage = data.background;
+    
+    pointerPlacement(data.aqi);
   }
+
+  const locationPointer = document.querySelector(".location-pointer");
+
+  function pointerPlacement(AQIValue) {
+    const parentWidth = locationPointer.parentElement.scrollWidth;
+    // console.log(parentWidth);
+    // console.log(AQIValue / 500);
+    console.log(AQIValue / 500 * parentWidth);
+    locationPointer.style.transform = `translateX(${AQIValue / 500 * parentWidth}px) rotate(180deg)`;
+  }
+
+  
