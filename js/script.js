@@ -64,7 +64,9 @@ const pollutionScale = [
         } 
     }
     catch(error){
-      throw new Error(error); 
+      loader.classList.remove("active");
+      emojiLogo.src = "./img/browser.svg";
+      userInformation.textContent = error.message;
     }
   }
 
@@ -76,16 +78,15 @@ const pollutionScale = [
   const pollutionValue = document.querySelector(".pollution-value");
 
   function populateUI(data) {
-    emojiLogo.src = `img/${data.src}.svg`;
+    emojiLogo.src = `./img/${data.src}.svg`;
     userInformation.textContent = `Here is the ${data.city} situation`;
     cityName.textContent = `${data.city}`;
     pollutionInfo.textContent = data.quality;
     pollutionValue.textContent = data.aqi;
     backgroundLayer.style.backgroundImage = data.background;
-    
+    loader.classList.remove("active");
     pointerPlacement(data.aqi);
   }
-
   const locationPointer = document.querySelector(".location-pointer");
 
   function pointerPlacement(AQIValue) {
